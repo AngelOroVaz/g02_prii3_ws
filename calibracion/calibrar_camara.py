@@ -13,19 +13,19 @@ FLAGS = (
 FOTOS = 'calibracion/fotos'
 SALIDA = 'calibracion/CameraModel.yml'
 
-# Criterio usado por cornerSubPix para mejorar la precision de las esquinas.
+
 criteria = (
     cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,
     30,
     0.001,
 )
 
-# Puntos teoricos del tablero: (0,0,0), (1,0,0), ...
+
 objp = np.zeros((CHECKERBOARD[0] * CHECKERBOARD[1], 3), np.float32)
 objp[:, :2] = np.mgrid[0:CHECKERBOARD[0], 0:CHECKERBOARD[1]].T.reshape(-1, 2)
 
-objpoints = []  # Puntos 3D conocidos del tablero
-imgpoints = []  # Puntos 2D detectados en las fotos
+objpoints = []
+imgpoints = []
 imagenes = []
 
 for extension in ('*.jpg', '*.jpeg', '*.png', '*.JPG', '*.JPEG', '*.PNG'):
@@ -50,7 +50,7 @@ for ruta in imagenes:
 if not objpoints:
     raise RuntimeError('No se ha detectado el tablero en ninguna imagen')
 
-# Calcula cameraMatrix, distCoeffs y la pose del tablero en cada foto.
+
 error, camera_matrix, dist_coeffs, _, _ = cv2.calibrateCamera(
     objpoints,
     imgpoints,
@@ -64,7 +64,7 @@ print('Error de calibracion:', error)
 print('Matriz de camara:\n', camera_matrix)
 print('Coeficientes de distorsion:\n', dist_coeffs)
 
-# Guardar los parametros que usaremos para rectificar y calcular poses ArUco.
+
 fs = cv2.FileStorage(SALIDA, cv2.FILE_STORAGE_WRITE)
 fs.write('cameraMatrix', camera_matrix)
 fs.write('distCoeffs', dist_coeffs)

@@ -9,7 +9,6 @@ from sensor_msgs.msg import Image
 
 
 class CameraRectification(Node):
-    """Recibe imagenes ROS y muestra original y rectificada."""
 
     def __init__(self):
         super().__init__('camera_rectification')
@@ -18,7 +17,7 @@ class CameraRectification(Node):
         self.declare_parameter('image_topic', '/camera/image_raw')
         image_topic = self.get_parameter('image_topic').value
 
-        # Cargamos cameraMatrix y distCoeffs obtenidos en la calibracion.
+
         package = get_package_share_directory('g02_prii3_move_jetbot')
         calibration_file = os.path.join(package, 'config', 'CameraModel.yml')
 
@@ -30,7 +29,7 @@ class CameraRectification(Node):
         if self.camera_matrix is None or self.dist_coeffs is None:
             raise RuntimeError('No se pudo cargar CameraModel.yml')
 
-        # SUBSCRIBER: recibe cada frame de la camara del JetBot.
+
         self.image_sub = self.create_subscription(
             Image, image_topic, self.image_callback, 10
         )

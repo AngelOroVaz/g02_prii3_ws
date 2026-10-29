@@ -55,7 +55,7 @@ error_global, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(
 
 errores = []
 for i in range(len(objpoints)):
-    # Proyectamos los puntos 3D y los comparamos con los corners detectados.
+
     proyectados, _ = cv2.projectPoints(
         objpoints[i], rvecs[i], tvecs[i], mtx, dist
     )

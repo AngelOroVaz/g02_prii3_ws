@@ -6,7 +6,6 @@ from sensor_msgs.msg import Image
 
 
 class ImagePublisher(Node):
-    """Simula una camara ROS publicando repetidamente una imagen guardada."""
 
     def __init__(self):
         super().__init__('image_publisher')
@@ -16,7 +15,7 @@ class ImagePublisher(Node):
         if self.image is None:
             raise RuntimeError('No se pudo cargar calibracion/imagen_prueba.jpg')
 
-        # PUBLISHER: los nodos de vision se suscriben a este topic.
+
         self.image_pub = self.create_publisher(Image, '/camera/image_raw', 10)
         self.timer = self.create_timer(0.5, self.publish_image)
 

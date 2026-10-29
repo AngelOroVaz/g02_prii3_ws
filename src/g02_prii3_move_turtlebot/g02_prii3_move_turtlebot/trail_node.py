@@ -5,7 +5,6 @@ from nav_msgs.msg import Odometry, Path
 
 
 class TrailNode(Node):
-    """Convierte la odometria del robot en un camino visible en RViz."""
 
     def __init__(self):
         super().__init__('trail_node')
@@ -13,12 +12,12 @@ class TrailNode(Node):
         self.path = Path()
         self.path.header.frame_id = 'odom'
 
-        # SUBSCRIBER: recibe la posicion del TurtleBot3.
+
         self.odom_sub = self.create_subscription(
             Odometry, '/odom', self.odom_callback, 10
         )
 
-        # PUBLISHER: envia el recorrido acumulado a RViz.
+
         self.path_pub = self.create_publisher(Path, '/robot_path', 10)
 
     def odom_callback(self, msg):

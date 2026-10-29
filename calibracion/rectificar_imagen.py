@@ -5,7 +5,7 @@ IMAGEN = 'calibracion/fotos/2026-09-24-194027.jpg'
 CALIBRACION = 'calibracion/CameraModel.yml'
 SALIDA = 'calibracion/comparacion_rectificacion.jpg'
 
-# Cargar la calibracion.
+
 fs = cv2.FileStorage(CALIBRACION, cv2.FILE_STORAGE_READ)
 camera_matrix = fs.getNode('cameraMatrix').mat()
 dist_coeffs = fs.getNode('distCoeffs').mat()
@@ -20,7 +20,7 @@ new_matrix, _ = cv2.getOptimalNewCameraMatrix(
     camera_matrix, dist_coeffs, (w, h), 1, (w, h)
 )
 
-# Corrige la distorsion de la lente usando la calibracion.
+
 rectificada = cv2.undistort(
     imagen, camera_matrix, dist_coeffs, None, new_matrix
 )

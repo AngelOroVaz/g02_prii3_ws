@@ -4,11 +4,10 @@ import numpy as np
 IMAGEN = 'calibracion/fotos/2026-09-24-194027.jpg'
 CALIBRACION = 'calibracion/CameraModel.yml'
 SALIDA = 'calibracion/aruco_detectado.jpg'
-MARKER_SIZE = 0.05  # 5 cm
+MARKER_SIZE = 0.05
 
 
 def detectar_aruco(gris):
-    """Detecta DICT_4X4_50 en OpenCV nuevo o antiguo."""
     if hasattr(cv2.aruco, 'ArucoDetector'):
         diccionario = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
         detector = cv2.aruco.ArucoDetector(
@@ -22,15 +21,14 @@ def detectar_aruco(gris):
 
 
 def calcular_pose(corner, camera_matrix, dist_coeffs):
-    """Calcula rotacion y traslacion del marcador."""
-    # En OpenCV antiguo existe estimatePoseSingleMarkers.
+
     if hasattr(cv2.aruco, 'estimatePoseSingleMarkers'):
         rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(
             [corner], MARKER_SIZE, camera_matrix, dist_coeffs
         )
         return rvecs[0], tvecs[0]
 
-    # En OpenCV nuevo hacemos la misma estimacion con solvePnP.
+
     half = MARKER_SIZE / 2.0
     object_points = np.array([
         [-half,  half, 0.0],
@@ -57,7 +55,7 @@ if imagen is None:
 
 gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
-# Cargar cameraMatrix y distCoeffs.
+
 fs = cv2.FileStorage(CALIBRACION, cv2.FILE_STORAGE_READ)
 camera_matrix = fs.getNode('cameraMatrix').mat()
 dist_coeffs = fs.getNode('distCoeffs').mat()

@@ -3,10 +3,10 @@ import os
 
 import cv2
 
-CHECKERBOARD = (13, 9)  # Esquinas interiores
+CHECKERBOARD = (13, 9)
 FOTOS = 'calibracion/fotos'
 
-# Buscar todas las imagenes de calibracion.
+
 imagenes = []
 for extension in ('*.jpg', '*.jpeg', '*.png', '*.JPG', '*.JPEG', '*.PNG'):
     imagenes.extend(glob.glob(os.path.join(FOTOS, extension)))
@@ -23,7 +23,7 @@ for ruta in imagenes:
 
     gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
-    # Detecta las 13 x 9 esquinas interiores del tablero.
+
     encontrado, esquinas = cv2.findChessboardCorners(
         gris,
         CHECKERBOARD,
@@ -37,7 +37,7 @@ for ruta in imagenes:
         validas += 1
         print(f'[OK] {nombre}')
 
-        # Solo sirve para comprobar visualmente que la deteccion es correcta.
+
         cv2.drawChessboardCorners(imagen, CHECKERBOARD, esquinas, encontrado)
         cv2.imshow('Esquinas detectadas', imagen)
         cv2.waitKey(0)

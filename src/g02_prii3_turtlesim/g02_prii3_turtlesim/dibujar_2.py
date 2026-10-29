@@ -5,22 +5,21 @@ from std_srvs.srv import Empty, Trigger
 
 
 class DibujarDos(Node):
-    """Controla turtlesim para dibujar el numero 2."""
 
     def __init__(self):
         super().__init__('dibujar_2')
 
-        # PUBLISHER: turtlesim esta suscrito a /turtle1/cmd_vel.
+
         self.cmd_pub = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
 
-        # Cada accion: (velocidad lineal, velocidad angular, segundos).
+
         self.acciones = [
-            (1.0, 0.0, 2.0),    # Linea superior
-            (1.0, -1.0, 1.57),  # Curva
-            (0.0, -1.0, 0.78),  # Giro hacia la diagonal
-            (1.0, 0.0, 4.0),    # Diagonal
-            (0.0, 1.0, 2.35),   # Giro para la base
-            (1.0, 0.0, 2.5),    # Base
+            (1.0, 0.0, 2.0),
+            (1.0, -1.0, 1.57),
+            (0.0, -1.0, 0.78),
+            (1.0, 0.0, 4.0),
+            (0.0, 1.0, 2.35),
+            (1.0, 0.0, 2.5),
         ]
 
         self.periodo = 0.05
@@ -29,12 +28,12 @@ class DibujarDos(Node):
         self.pausado = False
         self.finalizado = False
 
-        # Servicios del Sprint 1.
+
         self.create_service(Trigger, '/detener_dibujo', self.detener)
         self.create_service(Trigger, '/reanudar_dibujo', self.reanudar)
         self.create_service(Trigger, '/reiniciar_dibujo', self.reiniciar)
 
-        # Cliente del servicio /reset que ofrece turtlesim.
+
         self.reset_client = self.create_client(Empty, '/reset')
 
         self.timer = self.create_timer(self.periodo, self.control)

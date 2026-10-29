@@ -3,7 +3,7 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    # /scan -> laser_filter -> /filtered_scan -> collision_avoidance -> /cmd_vel
+
     laser_filter = Node(
         package='g02_prii3_move_jetbot',
         executable='laser_filter',

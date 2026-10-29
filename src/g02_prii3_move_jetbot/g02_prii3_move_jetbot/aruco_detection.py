@@ -10,7 +10,6 @@ from sensor_msgs.msg import Image
 
 
 class ArucoDetection(Node):
-    """Subscriber de la camara que detecta ID y pose 3D de ArUcos."""
 
     def __init__(self):
         super().__init__('aruco_detection')
@@ -32,7 +31,7 @@ class ArucoDetection(Node):
         if self.camera_matrix is None or self.dist_coeffs is None:
             raise RuntimeError('No se pudo cargar CameraModel.yml')
 
-        # Preparamos el detector segun la version de OpenCV.
+
         if hasattr(cv2.aruco, 'ArucoDetector'):
             dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
             self.detector = cv2.aruco.ArucoDetector(
@@ -43,7 +42,7 @@ class ArucoDetection(Node):
             self.dictionary = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
             self.parameters = cv2.aruco.DetectorParameters_create()
 
-        # SUBSCRIBER: recibe cada frame publicado por la camara.
+
         self.image_sub = self.create_subscription(
             Image, image_topic, self.image_callback, 10
         )

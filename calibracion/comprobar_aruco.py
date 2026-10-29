@@ -8,7 +8,7 @@ if imagen is None:
 
 gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
-# Probamos varios diccionarios para comprobar a cual pertenece el marcador.
+
 diccionarios = {
     'DICT_4X4_50': cv2.aruco.DICT_4X4_50,
     'DICT_4X4_100': cv2.aruco.DICT_4X4_100,
@@ -22,13 +22,13 @@ diccionarios = {
 }
 
 for nombre, codigo in diccionarios.items():
-    # API actual de OpenCV.
+
     if hasattr(cv2.aruco, 'ArucoDetector'):
         diccionario = cv2.aruco.getPredefinedDictionary(codigo)
         parametros = cv2.aruco.DetectorParameters()
         detector = cv2.aruco.ArucoDetector(diccionario, parametros)
         _, ids, _ = detector.detectMarkers(gris)
-    # Compatibilidad con versiones antiguas (por ejemplo algunas de ROS 2 Foxy).
+
     else:
         diccionario = cv2.aruco.Dictionary_get(codigo)
         parametros = cv2.aruco.DetectorParameters_create()

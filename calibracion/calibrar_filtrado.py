@@ -20,7 +20,7 @@ criteria = (
     0.001,
 )
 
-# Coordenadas 3D conocidas del tablero plano (Z = 0).
+
 objp = np.zeros((CHECKERBOARD[0] * CHECKERBOARD[1], 3), np.float32)
 objp[:, :2] = np.mgrid[0:CHECKERBOARD[0], 0:CHECKERBOARD[1]].T.reshape(-1, 2)
 
@@ -34,7 +34,7 @@ imagenes.sort()
 
 gris = None
 
-# 1) Detectar y refinar corners.
+
 for ruta in imagenes:
     imagen = cv2.imread(ruta)
     if imagen is None:
@@ -51,7 +51,7 @@ for ruta in imagenes:
 if not objpoints:
     raise RuntimeError('No hay imagenes validas para calibrar')
 
-# 2) Primera calibracion con todas las imagenes validas.
+
 _, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(
     objpoints, imgpoints, gris.shape[::-1], None, None
 )
@@ -59,7 +59,7 @@ _, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(
 obj_filtrados = []
 img_filtrados = []
 
-# 3) Calcular error de reproyeccion y quitar imagenes con error alto.
+
 for i in range(len(objpoints)):
     proyectados, _ = cv2.projectPoints(
         objpoints[i], rvecs[i], tvecs[i], mtx, dist
@@ -77,7 +77,7 @@ if not obj_filtrados:
 print('Imagenes iniciales:', len(objpoints))
 print('Imagenes tras filtrado:', len(obj_filtrados))
 
-# 4) Calibracion final usando solo las imagenes buenas.
+
 error, camera_matrix, dist_coeffs, _, _ = cv2.calibrateCamera(
     obj_filtrados,
     img_filtrados,

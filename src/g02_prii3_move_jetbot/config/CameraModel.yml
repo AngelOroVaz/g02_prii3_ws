@@ -1,0 +1,20 @@
+%YAML:1.0
+---
+cameraMatrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 1.6919596530095250e+03, 0., 1.0052258150808402e+03, 0.,
+       1.8021412094967250e+03, 6.0351381767048815e+02, 0., 0., 1. ]
+distCoeffs: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [ -4.1338177985705721e-01, 4.7282102749392652e-01,
+       -3.2697490192610840e-02, -1.6236542380233443e-03,
+       -4.6366180021440229e-01 ]
+
+#cameraMatrix describe las características internas de la cámara y 
+#distCoeffs describe la distorsión de la lente. 
+#Los usamos para corregir la imagen y 
+#estimar correctamente la pose de los ArUco.

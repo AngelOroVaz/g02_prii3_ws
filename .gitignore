@@ -1,0 +1,16 @@
+build/
+install/
+log/
+__pycache__/
+*.pyc
+
+# Fotos originales de calibracion
+calibracion/fotos/
+
+# Resultados generados durante las pruebas
+calibracion/comparacion_rectificacion.jpg
+calibracion/aruco_detectado.jpg
+
+# Ficheros de calibracion intermedios
+calibracion/CameraModel.yml
+calibracion/CameraModel_filtrado.yml
